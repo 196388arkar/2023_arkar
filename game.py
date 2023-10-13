@@ -34,7 +34,7 @@ player_height = player_img.get_height()
 player_x = screen_width/2 - player_width/2
 player_y = screen_height - player_height
 player_dx = 0
-player_velocity = 1
+player_velocity = 2
 
 
 bullet_img = pg.image.load('resources/img/bullet.png')
@@ -42,7 +42,7 @@ bullet_width = bullet_img.get_width()
 bullet_height = bullet_img.get_height()
 bullet_x = player_x
 bullet_y = player_y - bullet_height
-bullet_dy = -2
+bullet_dy = -10
 bullet_visible = False
 def bullet_create():
     global bullet_y, bullet_x, bullet_visible
