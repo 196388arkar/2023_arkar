@@ -43,7 +43,28 @@ bullet_height = bullet_img.get_height()
 bullet_x = player_x
 bullet_y = player_y - bullet_height
 bullet_dy = -10
+
 bullet_visible = False
+
+
+enemy_img = pg.image.load('resources/img/enemy.png')
+enemy_width = enemy_img.get_width()
+enemy_height = enemy_img.get_height()
+enemy_x = player_x
+enemy_y = 0
+enemy_dx = 0
+enemy_dy = 1
+
+
+import random
+
+
+def enemy_create():
+    global enemy_x, enemy_y
+    enemy_x = random.randint(0, screen_width)
+    enemy_x = 0
+
+
 def bullet_create():
     global bullet_y, bullet_x, bullet_visible
     bullet_x = player_x
@@ -54,6 +75,13 @@ def bullet_create():
 def model_update():
     player_model()
     bullet_model()
+    enemy_model()
+
+
+def enemy_model():
+    global enemy_x, enemy_y
+    enemy_x += enemy_dx
+    enemy_y += enemy_dy
 
 
 def player_model():
@@ -73,6 +101,12 @@ def bullet_model():
         if bullet_y < 0:
             bullet_visible = False
             print(f"{bullet_visible=}")
+
+    rect_bullet = pg.Rect(bullet_x, bullet_y, bullet_width, bullet_height)
+    rect_enemy = pg.Rect(enemy_x, enemy_y, enemy_width, enemy_height)
+    if (rect_enemy.colliderect(rect_bullet)):
+        print('BANG!')
+        enemy_create()
 
 
 def redraw():
@@ -103,7 +137,7 @@ def event_process():
         if event.type == pg.KEYDOWN and event.key == pg.K_LEFT:
             player_dx = - player_velocity
         if event.type == pg.KEYDOWN and event.key == pg.K_RIGHT:
-            player_dx =  player_velocity
+            player_dx = player_velocity
         if event.type == pg.KEYUP and event.key == pg.K_LEFT:
             player_dx = 0
         if event.type == pg.KEYUP and event.key == pg.K_RIGHT:
